@@ -133,6 +133,13 @@ class Instructor extends Lambdasian {
   }
   demo (subject) { return `Today we are learning about ${subject}` };
   grade (student,subject) { return `${student.name} receives a perfect score on ${subject}` };
+  // - Now that our students have a grade build out a method on the Instructor (this will be used by _BOTH_ instructors and PM's) that will randomly add or subtract points to a student's grade. _Math.random_ will help.
+  changeGrade(student) {
+    student.grade += Math.floor(Math.random()*(21) - 10); //plus or minus ten points
+    if (student.grade > 100) { student.grade = 100; } 
+    if (student.grade < 0) { student.grade = 0; }
+  }
+
 }
 
 /*
@@ -156,6 +163,8 @@ class Student extends Lambdasian {
     this.previousBackground = info.previousBackground;
     this.className = info.className;
     this.favSubjects = info.favSubjects;
+    this.grade = Math.floor(Math.random()*101);
+    this.graduated = false;
   }
   listSubjects() {
     return this.favSubjects.join(",");
@@ -165,6 +174,18 @@ class Student extends Lambdasian {
   }
   sprintChallenge(subject) {
     return `${this.name} has begun sprint challenge on ${subject}`;
+  }
+  // - Add a graduate method to a student.
+  // + This method, when called, will check the grade of the student and see if they're ready to graduate from Lambda School
+  // + If the student's grade is above a 70% let them graduate! Otherwise go back to grading their assignments to increase their score.
+  graduate() {
+    if (this.grade > 70) { 
+      this.graduated = true;
+      console.log(`${this.name} graduated with a grade of ${this.grade}. Congratulations!`);
+    }
+    else {
+      console.log(`${this.name}, with a grade of ${this.grade} cannot graduate yet. Sorry`);
+    }
   }
 }
 
